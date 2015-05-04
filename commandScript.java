@@ -11,9 +11,10 @@ public class commandScript{
 	//Compiles the file using created process
 	public static void compileFile(Process compileProc) throws IOException, InterruptedException{
 		int status = compileProc.waitFor();  //Status code to detect any errors
-		BufferedReader stdError = new BufferedReader(new InputStreamReader(compileProc.getErrorStream()));
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(compileProc.getErrorStream())); //Stores errors from compiling
 		
-		String error = stdError.readLine();
+		String error = stdError.readLine(); //Reads line from stderror
+		
 		if(status != 0){  //Error has occurred
 			System.out.println("Compile has failed");
 			while(error != null){ //Prints out any errors
@@ -24,14 +25,15 @@ public class commandScript{
 	}
 	//Runs the file using created process
 	public static void runFile(Process runProc) throws IOException, InterruptedException{
-		int status = runProc.waitFor();
-		BufferedReader stdError = new BufferedReader(new InputStreamReader(runProc.getErrorStream()));
+		int status = runProc.waitFor(); //Status code to detect runtime errors
+		BufferedReader stdError = new BufferedReader(new InputStreamReader(runProc.getErrorStream())); //Stores errors from runtime
 			
-		String error = stdError.readLine();
+		String error = stdError.readLine(); //Reads line from stderror
 		
-		if(status != 0){
-			System.out.println(error);
-			System.exit(status);
+		if(status != 0){ //Runtime Error has occurred
+			System.out.println("Runtime Error has occurred");
+			System.out.println(error); //Print out one line of error 
+			System.exit(status); //Exit the program
 		}
 	}
 	
